@@ -35,3 +35,70 @@
   pointer-events: none;
 }
 
+/* ===== Study Log Form ===== */
+.formgrid {
+  display: grid;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+input[type="date"], textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 14px;
+  background: #fff;
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* 로그 카드 상단 정렬(삭제 버튼) */
+.studylog-card .card-head .toolbar {
+  margin: 0;
+}
+
+/* targets 버튼 + 점프 하이라이트(이전 기능) */
+.titem {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+}
+.titem:hover {
+  background: #fafafa;
+  border-color: #e5e5e5;
+}
+.titem .tmark { margin-top: 2px; }
+
+.row.flash {
+  border-top-color: transparent;
+  position: relative;
+}
+.row.flash::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  right: -10px;
+  top: 2px;
+  bottom: 2px;
+  border-radius: 12px;
+  outline: 2px solid #111;
+  opacity: 0.18;
+  pointer-events: none;
+}
