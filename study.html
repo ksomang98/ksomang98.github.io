@@ -29,10 +29,10 @@
 
     <div class="card">
       <h2>작성 템플릿</h2>
-      <pre class="pre">- 오늘 배운 개념 3개
-- 예제/링크 1개
-- 헷갈린 점 1개
-- 내일 복습할 것 1개</pre>
+      <pre class="pre">- 오늘 배운 개념
+- 예제/링크 
+- 헷갈린 점 
+- 내일 복습할 것</pre>
     </div>
 
     <!-- ✅ Python Review anchor -->
@@ -59,9 +59,10 @@
           <span class="small muted" id="targetsCount"></span>
         </div>
         <div class="targets-body" id="targetsBody"></div>
+        <div class="small muted" style="margin-top:10px;">※ 항목 클릭하면 해당 DAY가 열리고 그 위치로 이동해.</div>
       </div>
 
-      <!-- DAY 1 (기본 닫힘: open 속성 없음) -->
+      <!-- DAY 1 (기본 닫힘) -->
       <details class="day" data-day="day1">
         <summary><b>DAY1</b> — 자료형 / 반복 / dict 누적</summary>
 
@@ -315,7 +316,7 @@
       </details>
 
       <div class="note small muted">
-        “오늘은 이해한 걸 쌓아, 내일의 실전 전진을 만든다.”
+        “이해한 걸 쌓아 전진한다.”
       </div>
     </div>
 
@@ -342,7 +343,7 @@
 
   <script>
   (() => {
-    const KEY = "py_review_day1_day3_v2";
+    const KEY = "py_review_day1_day3_v3";
 
     const btnPrint = document.getElementById("btnPrint");
     const btnReset = document.getElementById("btnReset");
@@ -353,7 +354,6 @@
     const targetsBody = document.getElementById("targetsBody");
     const targetsCount = document.getElementById("targetsCount");
 
-    // state: { "day1|string|s1": "ok|mid|no", ... }
     const load = () => {
       try { return JSON.parse(localStorage.getItem(KEY) || "{}"); }
       catch { return {}; }
@@ -361,7 +361,6 @@
     const save = (state) => localStorage.setItem(KEY, JSON.stringify(state));
 
     const state = load();
-
     const rows = document.querySelectorAll(".row");
 
     const getId = (row) => {
@@ -370,13 +369,6 @@
       const section = box?.dataset.section || "x";
       const item = row.dataset.item || "x";
       return `${day}|${section}|${item}`;
-    };
-
-    const getDayLabel = (dayKey) => {
-      if (dayKey === "day1") return "DAY1";
-      if (dayKey === "day2") return "DAY2";
-      if (dayKey === "day3") return "DAY3";
-      return dayKey;
     };
 
     const paintRow = (row, v) => {
@@ -398,56 +390,7 @@
         else empty++;
       });
 
-      if (progressText) {
-        progressText.textContent = `총 ${total}개 · ✔ ${ok} / △ ${mid} / ❌ ${no} (미체크 ${empty})`;
-      }
-    };
-
-    const buildTargets = () => {
-      // △/❌만 모아서 { day1: [{label, v}], ... } 형태로 만들기
-      const bucket = { day1: [], day2: [], day3: [] };
-
-      rows.forEach(row => {
-        const v = row.dataset.value;
-        if (v !== "mid" && v !== "no") return;
-
-        const box = row.closest(".checklist");
-        const day = box?.dataset.day || "etc";
-        const label = row.querySelector("span")?.textContent?.trim() || "(항목)";
-        bucket[day] = bucket[day] || [];
-        bucket[day].push({ label, v });
-      });
-
-      // 렌더
-      let totalTargets = 0;
-      const parts = [];
-
-      Object.keys(bucket).forEach(dayKey => {
-        const items = bucket[dayKey];
-        if (!items || items.length === 0) return;
-
-        totalTargets += items.length;
-
-        const list = items.map(it => {
-          const mark = it.v === "mid" ? "△" : "❌";
-          return `<li><span class="tmark">${mark}</span><span class="ttext">${escapeHtml(it.label)}</span></li>`;
-        }).join("");
-
-        parts.push(`
-          <div class="tgroup">
-            <div class="tgroup-title">${getDayLabel(dayKey)}</div>
-            <ul class="tlist">${list}</ul>
-          </div>
-        `);
-      });
-
-      if (totalTargets === 0) {
-        targetsBody.innerHTML = `<div class="small muted">복습 대상 없음. (△/❌가 없어)</div>`;
-      } else {
-        targetsBody.innerHTML = parts.join("");
-      }
-
-      targetsCount.textContent = `· ${totalTargets}개`;
+      progressText.textContent = `총 ${total}개 · ✔ ${ok} / △ ${mid} / ❌ ${no} (미체크 ${empty})`;
     };
 
     const escapeHtml = (s) => {
@@ -459,41 +402,125 @@
         .replaceAll("'", "&#039;");
     };
 
-    // ✅ init: 모든 details를 기본 닫힘으로 강제
+    const labelDay = (k) => (k === "day1" ? "DAY1" : k === "day2" ? "DAY2" : k === "day3" ? "DAY3" : k);
+
+    // ✅ 해당 row로 이동: DAY 열기 + 스크롤 + 하이라이트
+    const goToRow = (rowId) => {
+      const row = document.querySelector(`.row[data-id="${CSS.escape(rowId)}"]`);
+      if (!row) return;
+
+      const dayDetails = row.closest("details.day");
+      if (dayDetails) dayDetails.open = true;
+
+      row.scrollIntoView({ behavior: "smooth", block: "center" });
+
+      row.classList.remove("flash");
+      // reflow
+      void row.offsetWidth;
+      row.classList.add("flash");
+      setTimeout(() => row.classList.remove("flash"), 900);
+    };
+
+    const buildTargets = () => {
+      // bucket: {day1:[{label,v,id}], ...}
+      const bucket = { day1: [], day2: [], day3: [] };
+
+      rows.forEach(row => {
+        const v = row.dataset.value;
+        if (v !== "mid" && v !== "no") return;
+
+        const label = row.querySelector("span")?.textContent?.trim() || "(항목)";
+        const id = row.dataset.id;
+        const day = row.dataset.daykey || "etc";
+        bucket[day] = bucket[day] || [];
+        bucket[day].push({ label, v, id });
+      });
+
+      let total = 0;
+      const parts = [];
+
+      Object.keys(bucket).forEach(dayKey => {
+        const items = bucket[dayKey];
+        if (!items || items.length === 0) return;
+
+        total += items.length;
+
+        const list = items.map(it => {
+          const mark = it.v === "mid" ? "△" : "❌";
+          return `
+            <li>
+              <button class="titem" type="button" data-goto="${escapeHtml(it.id)}">
+                <span class="tmark">${mark}</span>
+                <span class="ttext">${escapeHtml(it.label)}</span>
+              </button>
+            </li>
+          `;
+        }).join("");
+
+        parts.push(`
+          <div class="tgroup">
+            <div class="tgroup-title">${labelDay(dayKey)}</div>
+            <ul class="tlist">${list}</ul>
+          </div>
+        `);
+      });
+
+      if (total === 0) {
+        targetsBody.innerHTML = `<div class="small muted">복습 대상 없음. (△/❌가 없어)</div>`;
+      } else {
+        targetsBody.innerHTML = parts.join("");
+      }
+      targetsCount.textContent = `· ${total}개`;
+    };
+
+    // ✅ init: 모든 details 기본 닫힘 강제
     document.querySelectorAll("details.day").forEach(d => d.open = false);
 
-    // init paint from localStorage
+    // ✅ 각 row에 고유 id 붙이기 (targets에서 점프 가능하게)
     rows.forEach(row => {
       const id = getId(row);
+      row.dataset.id = id;
+
+      const box = row.closest(".checklist");
+      row.dataset.daykey = box?.dataset.day || "etc";
+
+      // 초기 paint
       paintRow(row, state[id]);
     });
 
     updateProgress();
     buildTargets();
 
-    // click handlers
+    // ✅ 체크 버튼 클릭
     document.addEventListener("click", (e) => {
       const btn = e.target.closest("button[data-v]");
-      if (!btn) return;
+      if (btn) {
+        const row = btn.closest(".row");
+        if (!row) return;
 
-      const row = btn.closest(".row");
-      if (!row) return;
+        const id = row.dataset.id;
+        const v = btn.dataset.v;
 
-      const id = getId(row);
-      const v = btn.dataset.v;
+        if (state[id] === v) {
+          delete state[id];
+          paintRow(row, "");
+        } else {
+          state[id] = v;
+          paintRow(row, v);
+        }
 
-      // same -> toggle off
-      if (state[id] === v) {
-        delete state[id];
-        paintRow(row, "");
-      } else {
-        state[id] = v;
-        paintRow(row, v);
+        save(state);
+        updateProgress();
+        buildTargets();
+        return;
       }
 
-      save(state);
-      updateProgress();
-      buildTargets();
+      // ✅ targets 항목 클릭 → 이동
+      const tbtn = e.target.closest(".titem[data-goto]");
+      if (tbtn) {
+        const rowId = tbtn.dataset.goto;
+        goToRow(rowId);
+      }
     });
 
     btnPrint?.addEventListener("click", () => window.print());
@@ -515,3 +542,4 @@
   </script>
 </body>
 </html>
+
