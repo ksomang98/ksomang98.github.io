@@ -132,24 +132,30 @@
 
     let items = load(); // [{id, title, status, goal, core, repo, demo, notes, createdAt}]
 
-    const escapeHtml = (s) => (s || "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
+    // ✅ replaceAll 호환성 문제 제거 + 어떤 값이 와도 안전하게 문자열 변환
+    function escapeHtml(s) {
+      const str = String(s ?? "");
+      return str.replace(/[&<>"']/g, (ch) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;",
+      }[ch]));
+    }
 
-    const nl2br = (s) => escapeHtml(s).replaceAll("\n", "<br>");
+    // ✅ replaceAll("\n") 호환성 제거
+    const nl2br = (s) => escapeHtml(s).split("\n").join("<br>");
 
     const linkOrText = (url) => {
-      const u = (url || "").trim();
+      const u = String(url ?? "").trim();
       if (!u) return `<span class="muted">추가 예정</span>`;
       const safe = escapeHtml(u);
       return `<a href="${safe}" target="_blank" rel="noopener">${safe}</a>`;
     };
 
     const statusBadge = (s) => {
-      const t = (s || "").trim();
+      const t = String(s ?? "").trim();
       return `<span class="chip">${escapeHtml(t || "준비 중")}</span>`;
     };
 
@@ -218,7 +224,7 @@
       if (!title) return;
 
       items.push({
-        id: crypto?.randomUUID ? crypto.randomUUID() : String(Date.now()) + "_" + Math.random().toString(16).slice(2),
+        id: (crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()) + "_" + Math.random().toString(16).slice(2),
         title, status, goal, core, repo, demo, notes,
         createdAt: String(Date.now())
       });
@@ -228,7 +234,7 @@
       clearInputs();
 
       const first = container.querySelector(".project-card");
-      first?.scrollIntoView({ behavior: "smooth", block: "start" });
+      first && first.scrollIntoView({ behavior: "smooth", block: "start" });
     });
 
     btnClear.addEventListener("click", clearInputs);
