@@ -19,13 +19,12 @@ body {
 /* 제목 */
 h1 {
   font-size: 36px;
-  margin-bottom: 10px;
+  margin: 0 0 14px;
 }
 
 h2 {
-  font-size: 22px;
-  margin-top: 40px;
-  margin-bottom: 16px;
+  font-size: 20px;
+  margin: 0 0 12px;
 }
 
 /* 소개 문단 */
@@ -36,59 +35,20 @@ p {
 
 /* 구분선 */
 hr {
-  margin: 40px 0;
+  margin: 28px 0;
   border: none;
   border-top: 1px solid #e5e5e5;
 }
 
-/* 리스트 */
-ul {
-  padding-left: 20px;
-}
-
-li {
-  margin-bottom: 8px;
-}
-
-/* 버튼 느낌 링크 */
+/* 링크 */
 a {
   color: #111;
   text-decoration: none;
 }
-
 a:hover {
   text-decoration: underline;
 }
 
-/* 바로가기 버튼 */
-.button-list {
-  list-style: none;
-  padding-left: 0;
-}
-
-.button-list li {
-  margin-bottom: 10px;
-}
-
-.button {
-  display: inline-block;
-  padding: 10px 16px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #fafafa;
-  transition: background-color 0.2s, border-color 0.2s;
-}
-
-.button:hover {
-  background-color: #f0f0f0;
-  border-color: #aaa;
-}
-
-/* GitHub 링크 강조 */
-.github-link {
-  margin-top: 30px;
-  font-size: 15px;
-}
 /* 상단 네비게이션 */
 .topbar {
   display: flex;
@@ -104,6 +64,8 @@ a:hover {
   font-weight: 800;
   letter-spacing: -0.2px;
 }
+.brand a { text-decoration: none; color: inherit; }
+.brand a:hover { text-decoration: none; }
 
 .nav {
   display: flex;
@@ -128,8 +90,8 @@ a:hover {
   border-color: #111;
   color: #fff;
 }
-.brand a { text-decoration: none; color: inherit; }
-.brand a:hover { text-decoration: none; }
+
+/* 카드 */
 .card {
   border: 1px solid #eee;
   border-radius: 14px;
@@ -137,5 +99,51 @@ a:hover {
   margin: 18px 0;
   background: #fff;
 }
+
+/* 작은 텍스트 */
 .muted { color: #555; }
 .small { font-size: 14px; }
+
+/* 리스트 */
+ul {
+  padding-left: 20px;
+}
+li {
+  margin-bottom: 8px;
+}
+
+/* 바로가기 버튼 */
+.button-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.button-list li {
+  margin-bottom: 10px;
+}
+
+.button {
+  display: inline-block;
+  padding: 10px 16px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #fafafa;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.button:hover {
+  background-color: #f0f0f0;
+  border-color: #aaa;
+  text-decoration: none;
+}
+
+/* pre */
+.pre {
+  margin: 0;
+  padding: 12px;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  overflow: auto;
+  background: #fafafa;
+}
