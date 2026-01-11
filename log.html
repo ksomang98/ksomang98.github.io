@@ -173,4 +173,90 @@
               <li><b>내일 할 것</b>: ${nl2br(x.next) || `<span class="muted">-</span>`}</li>
             </ul>
             ${shotHtml(x.shot)}
-          <
+          </div>
+        `;
+      }).join("");
+
+      container.innerHTML = html || `<p class="small muted">아직 기록이 없어. (위에서 추가하면 여기에 쌓여)</p>`;
+      countText.textContent = `기록 ${items.length}개`;
+    };
+
+    const clearInputs = () => {
+      dDone.value = "";
+      dBlocked.value = "";
+      dNext.value = "";
+      dShot.value = "";
+    };
+
+    // init
+    dDate.value = todayISO();
+    render();
+
+    btnAdd.addEventListener("click", () => {
+      const date = (dDate.value || todayISO()).trim();
+      const done = dDone.value.trim();
+      const blocked = dBlocked.value.trim();
+      const next = dNext.value.trim();
+      const shot = dShot.value.trim();
+
+      if (!date) return;
+
+      items.push({
+        id: crypto?.randomUUID ? crypto.randomUUID() : String(Date.now()) + "_" + Math.random().toString(16).slice(2),
+        date, done, blocked, next, shot,
+        createdAt: String(Date.now())
+      });
+
+      save(items);
+      render();
+      clearInputs();
+      dDate.value = todayISO();
+
+      const first = container.querySelector(".devlog-card");
+      first?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    btnClear.addEventListener("click", clearInputs);
+
+    document.addEventListener("click", (e) => {
+      const del = e.target.closest(".btnDelDev[data-del]");
+      if (!del) return;
+      const id = del.dataset.del;
+
+      items = items.filter(x => x.id !== id);
+      save(items);
+      render();
+    });
+
+    btnDeleteAll.addEventListener("click", () => {
+      items = [];
+      save(items);
+      render();
+    });
+
+    btnCopy.addEventListener("click", async () => {
+      const html = container.innerHTML.trim();
+      const payload =
+`<!-- Dev Log Cards (paste into log.html) -->
+${html}
+<!-- /Dev Log Cards -->`;
+
+      try {
+        await navigator.clipboard.writeText(payload);
+        btnCopy.textContent = "복사됨!";
+        setTimeout(() => btnCopy.textContent = "내보내기(HTML 복사)", 900);
+      } catch {
+        const ta = document.createElement("textarea");
+        ta.value = payload;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        btnCopy.textContent = "복사됨!";
+        setTimeout(() => btnCopy.textContent = "내보내기(HTML 복사)", 900);
+      }
+    });
+  })();
+  </script>
+</body>
+</html>
