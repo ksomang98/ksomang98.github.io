@@ -35,6 +35,419 @@
 - 내일 복습할 것 1개</pre>
     </div>
 
+    <!-- ✅ Python Review anchor -->
+    <div id="python-review"></div>
+
+    <!-- ✅ Python Review Checklist -->
+    <div class="card">
+      <div class="card-head">
+        <h2>Python 복습 체크리스트 (DAY1~DAY3)</h2>
+        <div class="chip muted">기준: ✔ / △ / ❌ → △, ❌만 복습</div>
+      </div>
+
+      <div class="toolbar">
+        <button class="button" id="btnPrint" type="button">🖨️ 프린트</button>
+        <button class="button" id="btnReset" type="button">초기화</button>
+        <span class="small muted" id="progressText"></span>
+      </div>
+
+      <!-- DAY 1 -->
+      <details class="day" open>
+        <summary><b>DAY1</b> — 자료형 / 반복 / dict 누적</summary>
+
+        <h3 class="sub">문자열</h3>
+        <div class="checklist" data-day="day1" data-section="string">
+          <div class="row" data-item="s1">
+            <span>문자열 인덱싱 / 슬라이싱 설명 가능</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+
+          <div class="row" data-item="s2">
+            <span>split, join, replace, strip 용도 구분 가능</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+
+          <div class="row" data-item="s3">
+            <span>문자열에서 특정 문자 개수 세기 가능</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+
+          <div class="row" data-item="s4">
+            <span>문자열 → 리스트 → 문자열 흐름 이해</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="sub">리스트</h3>
+        <div class="checklist" data-day="day1" data-section="list">
+          <div class="row" data-item="l1">
+            <span>for문으로 리스트 순회 가능</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+
+          <div class="row" data-item="l2">
+            <span>조건에 맞는 값만 새 리스트 생성 가능</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+
+          <div class="row" data-item="l3">
+            <span>append / extend 차이 설명 가능</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+
+          <div class="row" data-item="l4">
+            <span>리스트 내포 기본형 해석 가능 (x for x in data if 조건)</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="sub">dict</h3>
+        <div class="checklist" data-day="day1" data-section="dict">
+          <div class="row" data-item="d1">
+            <span>dict에서 key / value 차이 명확</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+
+          <div class="row" data-item="d2">
+            <span>for key in dict → key만 나온다는 것 이해</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+
+          <div class="row" data-item="d3">
+            <span>dict.values(), dict.items() 용도 구분</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+
+          <div class="row" data-item="d4">
+            <span>dict 누적 패턴 안 보고 작성 가능 (if key in d: ...)</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="sub">제어문</h3>
+        <div class="checklist" data-day="day1" data-section="ctrl">
+          <div class="row" data-item="c1">
+            <span>for + if 구조 자연스럽게 작성</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+          <div class="row" data-item="c2">
+            <span>break / continue 역할 구분</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+          <div class="row" data-item="c3">
+            <span>while 사용 시 종료 조건 의식함</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- DAY 2 -->
+      <details class="day">
+        <summary><b>DAY2</b> — 함수 / 리스트 내포</summary>
+
+        <h3 class="sub">함수 기본</h3>
+        <div class="checklist" data-day="day2" data-section="func-basic">
+          <div class="row" data-item="f1">
+            <span>함수 정의 틀 안 보고 작성 가능</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+          <div class="row" data-item="f2">
+            <span>매개변수 / return 역할 설명 가능</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+          <div class="row" data-item="f3">
+            <span>return 없을 때 None 나오는 이유 이해</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+          <div class="row" data-item="f4">
+            <span>함수 문제 보면 “def부터” 떠오름</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="sub">함수 활용</h3>
+        <div class="checklist" data-day="day2" data-section="func-use">
+          <div class="row" data-item="u1">
+            <span>리스트를 인자로 받아 처리 가능</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+          <div class="row" data-item="u2">
+            <span>dict를 인자로 받아 처리 가능</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+          <div class="row" data-item="u3">
+            <span>여러 값 return 가능 (return a, b)</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+          <div class="row" data-item="u4">
+            <span>함수 내부 for / if 구조 자연스러움</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="sub">가변 인자 / 리스트 내포</h3>
+        <div class="checklist" data-day="day2" data-section="args-comp">
+          <div class="row" data-item="a1">
+            <span>*args 의미 설명 가능</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+          <div class="row" data-item="a2">
+            <span>args가 튜플이라는 것 인지</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+          <div class="row" data-item="a3">
+            <span>가변 인자 합계 함수 작성 가능</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+          <div class="row" data-item="a4">
+            <span>기존 for문을 내포로 바꿀 수 있음 / 해석 가능</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+          <div class="row" data-item="a5">
+            <span>dict 누적은 내포로 안 바꾼다는 판단 가능</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- DAY 3 -->
+      <details class="day">
+        <summary><b>DAY3</b> — 클래스 / 파일 / 정규표현식(최소)</summary>
+
+        <h3 class="sub">클래스</h3>
+        <div class="checklist" data-day="day3" data-section="class">
+          <div class="row" data-item="k1">
+            <span>class 기본 구조 설명 가능</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+          <div class="row" data-item="k2">
+            <span>__init__ 역할 설명 가능</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+          <div class="row" data-item="k3">
+            <span>self.xxx 의미 이해</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+          <div class="row" data-item="k4">
+            <span>메서드 정의 / 호출 구분 가능</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+          <div class="row" data-item="k5">
+            <span>클래스 문제에서 “이건 속성 + 기능이네” 판단 가능</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="sub">파일 입출력</h3>
+        <div class="checklist" data-day="day3" data-section="file">
+          <div class="row" data-item="p1">
+            <span>with open() 구조 안 보고 작성 가능</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+          <div class="row" data-item="p2">
+            <span>파일 읽기 → 문자열 처리 → 누적 흐름 이해</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+          <div class="row" data-item="p3">
+            <span>파일 데이터 기반 dict 누적 가능</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="sub">정규표현식(최소)</h3>
+        <div class="checklist" data-day="day3" data-section="re">
+          <div class="row" data-item="r1">
+            <span>re.findall() 사용 가능</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+          <div class="row" data-item="r2">
+            <span>\d+ 숫자 추출 가능</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+          <div class="row" data-item="r3">
+            <span>[a-zA-Z]+ 단어 추출 가능</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+          <div class="row" data-item="r4">
+            <span>정규식 결과를 리스트로 받아 처리 가능</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+          <div class="row" data-item="r5">
+            <span>“정규식은 뽑고, 처리는 파이썬” 사고 가능</span>
+            <div class="status">
+              <button type="button" data-v="ok">✔</button>
+              <button type="button" data-v="mid">△</button>
+              <button type="button" data-v="no">❌</button>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <div class="note small muted">
+        “복습은 공부가 아니라 체크하는 과정이다.”
+      </div>
+    </div>
+
     <div class="card">
       <h2>2026-01-11</h2>
       <ul>
@@ -55,5 +468,97 @@
     <hr>
     <p class="small muted">© 2026 Kim Somang · GitHub Pages</p>
   </div>
+
+  <script>
+  (() => {
+    const KEY = "py_review_day1_day3_v1";
+
+    const btnPrint = document.getElementById("btnPrint");
+    const btnReset = document.getElementById("btnReset");
+    const progressText = document.getElementById("progressText");
+
+    // state: { "day1|string|s1": "ok|mid|no", ... }
+    const load = () => {
+      try { return JSON.parse(localStorage.getItem(KEY) || "{}"); }
+      catch { return {}; }
+    };
+    const save = (state) => localStorage.setItem(KEY, JSON.stringify(state));
+
+    const state = load();
+
+    const rows = document.querySelectorAll(".row");
+    const getId = (row) => {
+      const box = row.closest(".checklist");
+      const day = box?.dataset.day || "x";
+      const section = box?.dataset.section || "x";
+      const item = row.dataset.item || "x";
+      return `${day}|${section}|${item}`;
+    };
+
+    const paintRow = (row, v) => {
+      row.dataset.value = v || "";
+      row.querySelectorAll(".status button").forEach(b => {
+        b.classList.toggle("on", b.dataset.v === v);
+      });
+    };
+
+    const updateProgress = () => {
+      const total = rows.length;
+      let ok = 0, mid = 0, no = 0, empty = 0;
+
+      rows.forEach(r => {
+        const v = r.dataset.value;
+        if (v === "ok") ok++;
+        else if (v === "mid") mid++;
+        else if (v === "no") no++;
+        else empty++;
+      });
+
+      if (progressText) {
+        progressText.textContent = `총 ${total}개 · ✔ ${ok} / △ ${mid} / ❌ ${no} (미체크 ${empty})`;
+      }
+    };
+
+    // init
+    rows.forEach(row => {
+      const id = getId(row);
+      paintRow(row, state[id]);
+    });
+    updateProgress();
+
+    // click handlers
+    document.addEventListener("click", (e) => {
+      const btn = e.target.closest("button[data-v]");
+      if (!btn) return;
+
+      const row = btn.closest(".row");
+      if (!row) return;
+
+      const id = getId(row);
+      const v = btn.dataset.v;
+
+      // same -> toggle off
+      if (state[id] === v) {
+        delete state[id];
+        paintRow(row, "");
+      } else {
+        state[id] = v;
+        paintRow(row, v);
+      }
+
+      save(state);
+      updateProgress();
+    });
+
+    btnPrint?.addEventListener("click", () => window.print());
+
+    btnReset?.addEventListener("click", () => {
+      rows.forEach(r => paintRow(r, ""));
+      Object.keys(state).forEach(k => delete state[k]);
+      save(state);
+      updateProgress();
+    });
+  })();
+  </script>
 </body>
 </html>
