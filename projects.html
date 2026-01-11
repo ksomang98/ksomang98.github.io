@@ -27,28 +27,69 @@
     <h1>Projects</h1>
     <p class="muted">프로젝트는 진행 예정 → 진행 중 → 완료 순서로 업데이트.</p>
 
-    <div class="card">
-      <h2>1) 운영·트러블슈팅 지원 챗봇 (RAG)</h2>
-      <ul>
-        <li><b>목표</b>: 장비/비전 시스템 문서를 기반으로 현장 질문에 근거 포함 답변 제공</li>
-        <li><b>핵심</b>: 문서 업로드 → 질문 → 답변 + 근거 표시</li>
-        <li><b>진행</b>: 준비 중</li>
-        <li><b>Repo</b>: 추가 예정</li>
-        <li><b>Demo</b>: 추가 예정</li>
-      </ul>
+    <!-- ✅ 프로젝트 추가 폼 -->
+    <div class="card" id="projFormCard">
+      <div class="card-head">
+        <h2>프로젝트 추가</h2>
+        <div class="chip muted">추가하면 아래 카드로 저장됨</div>
+      </div>
+
+      <div class="toolbar">
+        <button class="button" id="btnAddProject" type="button">+ 추가</button>
+        <button class="button" id="btnClearProject" type="button">입력 지우기</button>
+        <button class="button" id="btnCopyProjectsHtml" type="button">내보내기(HTML 복사)</button>
+        <button class="button" id="btnDeleteAllProjects" type="button">전체 삭제</button>
+        <span class="small muted" id="projCountText"></span>
+      </div>
+
+      <div class="formgrid">
+        <label class="field">
+          <span class="small muted">프로젝트 제목</span>
+          <input id="pTitle" type="text" placeholder="예) 운영·트러블슈팅 지원 챗봇 (RAG)" />
+        </label>
+
+        <label class="field">
+          <span class="small muted">상태</span>
+          <select id="pStatus">
+            <option value="준비 중">준비 중</option>
+            <option value="진행 중">진행 중</option>
+            <option value="완료">완료</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span class="small muted">목표</span>
+          <textarea id="pGoal" rows="2" placeholder="예) 장비/비전 시스템 문서를 기반으로 현장 질문에 근거 포함 답변"></textarea>
+        </label>
+
+        <label class="field">
+          <span class="small muted">핵심</span>
+          <textarea id="pCore" rows="2" placeholder="예) 문서 업로드 → 질문 → 답변 + 근거 표시"></textarea>
+        </label>
+
+        <label class="field">
+          <span class="small muted">Repo (URL)</span>
+          <input id="pRepo" type="url" placeholder="예) https://github.com/..." />
+        </label>
+
+        <label class="field">
+          <span class="small muted">Demo (URL)</span>
+          <input id="pDemo" type="url" placeholder="예) https://..." />
+        </label>
+
+        <label class="field">
+          <span class="small muted">추가 메모</span>
+          <textarea id="pNotes" rows="2" placeholder="예) 실패 케이스 생성/오검출 분석 포인트 정리"></textarea>
+        </label>
+      </div>
+
+      <p class="small muted" style="margin-top:10px;">
+        ※ “내보내기(HTML 복사)”는 아래 프로젝트 카드들을 HTML로 복사해줘. 그대로 붙여넣으면 됨.
+      </p>
     </div>
 
-    <div class="card">
-      <h2>2) 불량 검사 + 실패 케이스 분석 + 엣지 추론 가정</h2>
-      <ul>
-        <li><b>목표</b>: 전처리 → 검사(규칙+AI) → OK/NG → 리포트 저장</li>
-        <li><b>실전</b>: 실패 케이스 생성, 오검출/미검출 분석</li>
-        <li><b>엣지</b>: FPS/해상도/모델 경량화 trade-off 정리</li>
-        <li><b>진행</b>: 준비 중</li>
-        <li><b>Repo</b>: 추가 예정</li>
-        <li><b>Demo</b>: 추가 예정</li>
-      </ul>
-    </div>
+    <!-- ✅ 프로젝트 카드들이 자동 렌더 -->
+    <div id="projectsContainer"></div>
 
     <p>
       <a class="button" href="index.html">← Home</a>
@@ -60,6 +101,177 @@
     <hr>
     <p class="small muted">© 2026 Kim Somang · GitHub Pages</p>
   </div>
+
+  <script>
+  (() => {
+    const KEY = "projects_board_v1";
+
+    const $ = (id) => document.getElementById(id);
+
+    const btnAdd = $("btnAddProject");
+    const btnClear = $("btnClearProject");
+    const btnCopy = $("btnCopyProjectsHtml");
+    const btnDeleteAll = $("btnDeleteAllProjects");
+    const countText = $("projCountText");
+
+    const container = $("projectsContainer");
+
+    const pTitle = $("pTitle");
+    const pStatus = $("pStatus");
+    const pGoal = $("pGoal");
+    const pCore = $("pCore");
+    const pRepo = $("pRepo");
+    const pDemo = $("pDemo");
+    const pNotes = $("pNotes");
+
+    const load = () => {
+      try { return JSON.parse(localStorage.getItem(KEY) || "[]"); }
+      catch { return []; }
+    };
+    const save = (arr) => localStorage.setItem(KEY, JSON.stringify(arr));
+
+    let items = load(); // [{id, title, status, goal, core, repo, demo, notes, createdAt}]
+
+    const escapeHtml = (s) => (s || "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+    const nl2br = (s) => escapeHtml(s).replaceAll("\n", "<br>");
+
+    const linkOrText = (url) => {
+      const u = (url || "").trim();
+      if (!u) return `<span class="muted">추가 예정</span>`;
+      const safe = escapeHtml(u);
+      return `<a href="${safe}" target="_blank" rel="noopener">${safe}</a>`;
+    };
+
+    const statusBadge = (s) => {
+      const t = (s || "").trim();
+      return `<span class="chip">${escapeHtml(t || "준비 중")}</span>`;
+    };
+
+    const sortItems = (arr) => {
+      // 완료는 아래로, 진행 중 중간, 준비 중 위
+      const rank = (s) => s === "준비 중" ? 0 : (s === "진행 중" ? 1 : 2);
+      return [...arr].sort((a,b) => {
+        const r = rank(a.status) - rank(b.status);
+        if (r !== 0) return r;
+        return Number(b.createdAt) - Number(a.createdAt);
+      });
+    };
+
+    const render = () => {
+      const sorted = sortItems(items);
+
+      const html = sorted.map((x, idx) => {
+        return `
+          <div class="card project-card" data-id="${escapeHtml(x.id)}">
+            <div class="card-head">
+              <h2>${escapeHtml(idx + 1)}) ${escapeHtml(x.title || "(제목 없음)")}</h2>
+              ${statusBadge(x.status)}
+            </div>
+
+            <ul>
+              <li><b>목표</b>: ${nl2br(x.goal) || `<span class="muted">-</span>`}</li>
+              <li><b>핵심</b>: ${nl2br(x.core) || `<span class="muted">-</span>`}</li>
+              <li><b>진행</b>: ${escapeHtml(x.status || "준비 중")}</li>
+              <li><b>Repo</b>: ${linkOrText(x.repo)}</li>
+              <li><b>Demo</b>: ${linkOrText(x.demo)}</li>
+              ${x.notes ? `<li><b>메모</b>: ${nl2br(x.notes)}</li>` : ``}
+            </ul>
+
+            <div class="toolbar">
+              <button class="button btnDelProject" type="button" data-del="${escapeHtml(x.id)}">삭제</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      container.innerHTML = html || `<p class="small muted">아직 프로젝트가 없어. (위에서 추가하면 여기에 쌓여)</p>`;
+      countText.textContent = `프로젝트 ${items.length}개`;
+    };
+
+    const clearInputs = () => {
+      pTitle.value = "";
+      pStatus.value = "준비 중";
+      pGoal.value = "";
+      pCore.value = "";
+      pRepo.value = "";
+      pDemo.value = "";
+      pNotes.value = "";
+    };
+
+    render();
+
+    btnAdd.addEventListener("click", () => {
+      const title = pTitle.value.trim();
+      const status = pStatus.value;
+      const goal = pGoal.value.trim();
+      const core = pCore.value.trim();
+      const repo = pRepo.value.trim();
+      const demo = pDemo.value.trim();
+      const notes = pNotes.value.trim();
+
+      if (!title) return;
+
+      items.push({
+        id: crypto?.randomUUID ? crypto.randomUUID() : String(Date.now()) + "_" + Math.random().toString(16).slice(2),
+        title, status, goal, core, repo, demo, notes,
+        createdAt: String(Date.now())
+      });
+
+      save(items);
+      render();
+      clearInputs();
+
+      const first = container.querySelector(".project-card");
+      first?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    btnClear.addEventListener("click", clearInputs);
+
+    document.addEventListener("click", (e) => {
+      const del = e.target.closest(".btnDelProject[data-del]");
+      if (!del) return;
+
+      const id = del.dataset.del;
+      items = items.filter(x => x.id !== id);
+      save(items);
+      render();
+    });
+
+    btnDeleteAll.addEventListener("click", () => {
+      items = [];
+      save(items);
+      render();
+    });
+
+    btnCopy.addEventListener("click", async () => {
+      const html = container.innerHTML.trim();
+      const payload =
+`<!-- Projects Cards (paste into projects.html) -->
+${html}
+<!-- /Projects Cards -->`;
+
+      try {
+        await navigator.clipboard.writeText(payload);
+        btnCopy.textContent = "복사됨!";
+        setTimeout(() => btnCopy.textContent = "내보내기(HTML 복사)", 900);
+      } catch {
+        const ta = document.createElement("textarea");
+        ta.value = payload;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        btnCopy.textContent = "복사됨!";
+        setTimeout(() => btnCopy.textContent = "내보내기(HTML 복사)", 900);
+      }
+    });
+  })();
+  </script>
 </body>
 </html>
-
