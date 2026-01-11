@@ -35,11 +35,58 @@
 - 내일 복습할 것</pre>
     </div>
 
+    <!-- ✅ 스터디 로그 입력 폼 -->
+    <div class="card" id="logFormCard">
+      <div class="card-head">
+        <h2>오늘 Study Log 추가</h2>
+        <div class="chip muted">추가하면 아래 카드로 저장됨</div>
+      </div>
+
+      <div class="toolbar">
+        <button class="button" id="btnAddLog" type="button">+ 추가</button>
+        <button class="button" id="btnClearInputs" type="button">입력 지우기</button>
+        <button class="button" id="btnCopyHtml" type="button">내보내기(HTML 복사)</button>
+        <button class="button" id="btnDeleteAllLogs" type="button">전체 삭제</button>
+        <span class="small muted" id="logCountText"></span>
+      </div>
+
+      <div class="formgrid">
+        <label class="field">
+          <span class="small muted">날짜</span>
+          <input id="logDate" type="date" />
+        </label>
+
+        <label class="field">
+          <span class="small muted">오늘 배운 개념</span>
+          <textarea id="logConcept" rows="3" placeholder="예) 리스트 컴프리헨션, dict 누적, with open()"></textarea>
+        </label>
+
+        <label class="field">
+          <span class="small muted">예제/링크</span>
+          <textarea id="logLink" rows="2" placeholder="예) https://... / 코드 스니펫"></textarea>
+        </label>
+
+        <label class="field">
+          <span class="small muted">헷갈린 점</span>
+          <textarea id="logConfuse" rows="2" placeholder="예) continue 썼을 때 num 증가 위치"></textarea>
+        </label>
+
+        <label class="field">
+          <span class="small muted">내일 복습</span>
+          <textarea id="logTomorrow" rows="2" placeholder="예) 임베디드 시스템 기본 개념"></textarea>
+        </label>
+      </div>
+
+      <p class="small muted" style="margin-top:10px;">
+        ※ “내보내기(HTML 복사)”는 아래 기록 카드들만 HTML로 복사해줘. 그대로 붙여넣으면 됨.
+      </p>
+    </div>
+
     <!-- ✅ Python Review anchor -->
     <div id="python-review"></div>
 
     <!-- ✅ Python Review Checklist -->
-    <div class="card">
+    <div class="card" id="pyReviewCard">
       <div class="card-head">
         <h2>Python 복습 체크리스트 (DAY1~DAY3)</h2>
         <div class="chip muted">기준: ✔ / △ / ❌ → △, ❌만 복습</div>
@@ -52,7 +99,6 @@
         <span class="small muted" id="progressText"></span>
       </div>
 
-      <!-- ✅ Targets Panel (△/❌ 모아보기) -->
       <div class="targets" id="targetsBox" hidden>
         <div class="targets-head">
           <b>복습 대상(△/❌)</b>
@@ -62,148 +108,73 @@
         <div class="small muted" style="margin-top:10px;">※ 항목 클릭하면 해당 DAY가 열리고 그 위치로 이동해.</div>
       </div>
 
-      <!-- DAY 1 (기본 닫힘) -->
+      <!-- DAY 1 -->
       <details class="day" data-day="day1">
         <summary><b>DAY1</b> — 자료형 / 반복 / dict 누적</summary>
 
         <h3 class="sub">문자열</h3>
         <div class="checklist" data-day="day1" data-section="string">
-          <div class="row" data-item="s1">
-            <span>문자열 인덱싱 / 슬라이싱 설명 가능</span>
-            <div class="status">
-              <button type="button" data-v="ok">✔</button>
-              <button type="button" data-v="mid">△</button>
-              <button type="button" data-v="no">❌</button>
-            </div>
-          </div>
-          <div class="row" data-item="s2">
-            <span>split, join, replace, strip 용도 구분 가능</span>
-            <div class="status">
-              <button type="button" data-v="ok">✔</button>
-              <button type="button" data-v="mid">△</button>
-              <button type="button" data-v="no">❌</button>
-            </div>
-          </div>
-          <div class="row" data-item="s3">
-            <span>문자열에서 특정 문자 개수 세기 가능</span>
-            <div class="status">
-              <button type="button" data-v="ok">✔</button>
-              <button type="button" data-v="mid">△</button>
-              <button type="button" data-v="no">❌</button>
-            </div>
-          </div>
-          <div class="row" data-item="s4">
-            <span>문자열 → 리스트 → 문자열 흐름 이해</span>
-            <div class="status">
-              <button type="button" data-v="ok">✔</button>
-              <button type="button" data-v="mid">△</button>
-              <button type="button" data-v="no">❌</button>
-            </div>
-          </div>
+          <div class="row" data-item="s1"><span>문자열 인덱싱 / 슬라이싱 설명 가능</span><div class="status">
+            <button type="button" data-v="ok">✔</button><button type="button" data-v="mid">△</button><button type="button" data-v="no">❌</button>
+          </div></div>
+          <div class="row" data-item="s2"><span>split, join, replace, strip 용도 구분 가능</span><div class="status">
+            <button type="button" data-v="ok">✔</button><button type="button" data-v="mid">△</button><button type="button" data-v="no">❌</button>
+          </div></div>
+          <div class="row" data-item="s3"><span>문자열에서 특정 문자 개수 세기 가능</span><div class="status">
+            <button type="button" data-v="ok">✔</button><button type="button" data-v="mid">△</button><button type="button" data-v="no">❌</button>
+          </div></div>
+          <div class="row" data-item="s4"><span>문자열 → 리스트 → 문자열 흐름 이해</span><div class="status">
+            <button type="button" data-v="ok">✔</button><button type="button" data-v="mid">△</button><button type="button" data-v="no">❌</button>
+          </div></div>
         </div>
 
         <h3 class="sub">리스트</h3>
         <div class="checklist" data-day="day1" data-section="list">
-          <div class="row" data-item="l1">
-            <span>for문으로 리스트 순회 가능</span>
-            <div class="status">
-              <button type="button" data-v="ok">✔</button>
-              <button type="button" data-v="mid">△</button>
-              <button type="button" data-v="no">❌</button>
-            </div>
-          </div>
-          <div class="row" data-item="l2">
-            <span>조건에 맞는 값만 새 리스트 생성 가능</span>
-            <div class="status">
-              <button type="button" data-v="ok">✔</button>
-              <button type="button" data-v="mid">△</button>
-              <button type="button" data-v="no">❌</button>
-            </div>
-          </div>
-          <div class="row" data-item="l3">
-            <span>append / extend 차이 설명 가능</span>
-            <div class="status">
-              <button type="button" data-v="ok">✔</button>
-              <button type="button" data-v="mid">△</button>
-              <button type="button" data-v="no">❌</button>
-            </div>
-          </div>
-          <div class="row" data-item="l4">
-            <span>리스트 내포 기본형 해석 가능 (x for x in data if 조건)</span>
-            <div class="status">
-              <button type="button" data-v="ok">✔</button>
-              <button type="button" data-v="mid">△</button>
-              <button type="button" data-v="no">❌</button>
-            </div>
-          </div>
+          <div class="row" data-item="l1"><span>for문으로 리스트 순회 가능</span><div class="status">
+            <button type="button" data-v="ok">✔</button><button type="button" data-v="mid">△</button><button type="button" data-v="no">❌</button>
+          </div></div>
+          <div class="row" data-item="l2"><span>조건에 맞는 값만 새 리스트 생성 가능</span><div class="status">
+            <button type="button" data-v="ok">✔</button><button type="button" data-v="mid">△</button><button type="button" data-v="no">❌</button>
+          </div></div>
+          <div class="row" data-item="l3"><span>append / extend 차이 설명 가능</span><div class="status">
+            <button type="button" data-v="ok">✔</button><button type="button" data-v="mid">△</button><button type="button" data-v="no">❌</button>
+          </div></div>
+          <div class="row" data-item="l4"><span>리스트 내포 기본형 해석 가능 (x for x in data if 조건)</span><div class="status">
+            <button type="button" data-v="ok">✔</button><button type="button" data-v="mid">△</button><button type="button" data-v="no">❌</button>
+          </div></div>
         </div>
 
         <h3 class="sub">dict</h3>
         <div class="checklist" data-day="day1" data-section="dict">
-          <div class="row" data-item="d1">
-            <span>dict에서 key / value 차이 명확</span>
-            <div class="status">
-              <button type="button" data-v="ok">✔</button>
-              <button type="button" data-v="mid">△</button>
-              <button type="button" data-v="no">❌</button>
-            </div>
-          </div>
-          <div class="row" data-item="d2">
-            <span>for key in dict → key만 나온다는 것 이해</span>
-            <div class="status">
-              <button type="button" data-v="ok">✔</button>
-              <button type="button" data-v="mid">△</button>
-              <button type="button" data-v="no">❌</button>
-            </div>
-          </div>
-          <div class="row" data-item="d3">
-            <span>dict.values(), dict.items() 용도 구분</span>
-            <div class="status">
-              <button type="button" data-v="ok">✔</button>
-              <button type="button" data-v="mid">△</button>
-              <button type="button" data-v="no">❌</button>
-            </div>
-          </div>
-          <div class="row" data-item="d4">
-            <span>dict 누적 패턴 안 보고 작성 가능 (if key in d: ...)</span>
-            <div class="status">
-              <button type="button" data-v="ok">✔</button>
-              <button type="button" data-v="mid">△</button>
-              <button type="button" data-v="no">❌</button>
-            </div>
-          </div>
+          <div class="row" data-item="d1"><span>dict에서 key / value 차이 명확</span><div class="status">
+            <button type="button" data-v="ok">✔</button><button type="button" data-v="mid">△</button><button type="button" data-v="no">❌</button>
+          </div></div>
+          <div class="row" data-item="d2"><span>for key in dict → key만 나온다는 것 이해</span><div class="status">
+            <button type="button" data-v="ok">✔</button><button type="button" data-v="mid">△</button><button type="button" data-v="no">❌</button>
+          </div></div>
+          <div class="row" data-item="d3"><span>dict.values(), dict.items() 용도 구분</span><div class="status">
+            <button type="button" data-v="ok">✔</button><button type="button" data-v="mid">△</button><button type="button" data-v="no">❌</button>
+          </div></div>
+          <div class="row" data-item="d4"><span>dict 누적 패턴 안 보고 작성 가능 (if key in d: ...)</span><div class="status">
+            <button type="button" data-v="ok">✔</button><button type="button" data-v="mid">△</button><button type="button" data-v="no">❌</button>
+          </div></div>
         </div>
 
         <h3 class="sub">제어문</h3>
         <div class="checklist" data-day="day1" data-section="ctrl">
-          <div class="row" data-item="c1">
-            <span>for + if 구조 자연스럽게 작성</span>
-            <div class="status">
-              <button type="button" data-v="ok">✔</button>
-              <button type="button" data-v="mid">△</button>
-              <button type="button" data-v="no">❌</button>
-            </div>
-          </div>
-          <div class="row" data-item="c2">
-            <span>break / continue 역할 구분</span>
-            <div class="status">
-              <button type="button" data-v="ok">✔</button>
-              <button type="button" data-v="mid">△</button>
-              <button type="button" data-v="no">❌</button>
-            </div>
-          </div>
-          <div class="row" data-item="c3">
-            <span>while 사용 시 종료 조건 의식함</span>
-            <div class="status">
-              <button type="button" data-v="ok">✔</button>
-              <button type="button" data-v="mid">△</button>
-              <button type="button" data-v="no">❌</button>
-            </div>
-          </div>
+          <div class="row" data-item="c1"><span>for + if 구조 자연스럽게 작성</span><div class="status">
+            <button type="button" data-v="ok">✔</button><button type="button" data-v="mid">△</button><button type="button" data-v="no">❌</button>
+          </div></div>
+          <div class="row" data-item="c2"><span>break / continue 역할 구분</span><div class="status">
+            <button type="button" data-v="ok">✔</button><button type="button" data-v="mid">△</button><button type="button" data-v="no">❌</button>
+          </div></div>
+          <div class="row" data-item="c3"><span>while 사용 시 종료 조건 의식함</span><div class="status">
+            <button type="button" data-v="ok">✔</button><button type="button" data-v="mid">△</button><button type="button" data-v="no">❌</button>
+          </div></div>
         </div>
       </details>
 
-      <!-- DAY 2 (기본 닫힘) -->
+      <!-- DAY 2 -->
       <details class="day" data-day="day2">
         <summary><b>DAY2</b> — 함수 / 리스트 내포</summary>
 
@@ -259,7 +230,7 @@
         </div>
       </details>
 
-      <!-- DAY 3 (기본 닫힘) -->
+      <!-- DAY 3 -->
       <details class="day" data-day="day3">
         <summary><b>DAY3</b> — 클래스 / 파일 / 정규표현식(최소)</summary>
 
@@ -315,20 +286,11 @@
         </div>
       </details>
 
-      <div class="note small muted">
-        “이해한 걸 쌓아 전진한다.”
-      </div>
+      <div class="note small muted">“이해한 것을 쌓아 전진한다.”</div>
     </div>
 
-    <div class="card">
-      <h2>2026-01-11</h2>
-      <ul>
-        <li><b>오늘 배운 개념</b>: </li>
-        <li><b>예제/링크</b>: </li>
-        <li><b>헷갈린 점</b>: </li>
-        <li><b>내일 복습</b>: 임베디드 시스템 이해</li>
-      </ul>
-    </div>
+    <!-- ✅ 여기 아래에 스터디 로그 카드들이 자동 렌더됨 -->
+    <div id="logsContainer"></div>
 
     <p>
       <a class="button" href="index.html">← Home</a>
@@ -343,6 +305,179 @@
 
   <script>
   (() => {
+    /** ---------------------------
+     *  A) Study Logs (입력 → 카드 생성/저장/내보내기)
+     *  --------------------------*/
+    const LOG_KEY = "study_logs_v1";
+
+    const logDate = document.getElementById("logDate");
+    const logConcept = document.getElementById("logConcept");
+    const logLink = document.getElementById("logLink");
+    const logConfuse = document.getElementById("logConfuse");
+    const logTomorrow = document.getElementById("logTomorrow");
+
+    const btnAddLog = document.getElementById("btnAddLog");
+    const btnClearInputs = document.getElementById("btnClearInputs");
+    const btnCopyHtml = document.getElementById("btnCopyHtml");
+    const btnDeleteAllLogs = document.getElementById("btnDeleteAllLogs");
+
+    const logsContainer = document.getElementById("logsContainer");
+    const logCountText = document.getElementById("logCountText");
+
+    const todayISO = () => {
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      return `${y}-${m}-${day}`;
+    };
+
+    const loadLogs = () => {
+      try { return JSON.parse(localStorage.getItem(LOG_KEY) || "[]"); }
+      catch { return []; }
+    };
+    const saveLogs = (arr) => localStorage.setItem(LOG_KEY, JSON.stringify(arr));
+
+    let logs = loadLogs(); // [{date, concept, link, confuse, tomorrow, createdAt}]
+
+    const escapeHtml = (s) => (s || "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+    const nl2br = (s) => escapeHtml(s).replaceAll("\n", "<br>");
+
+    const renderLogs = () => {
+      // 최신이 위
+      const sorted = [...logs].sort((a,b) => (b.date + b.createdAt) > (a.date + a.createdAt) ? 1 : -1);
+
+      const cards = sorted.map((x, idx) => {
+        const id = `log_${x.date}_${idx}`;
+        return `
+          <div class="card studylog-card" data-logid="${escapeHtml(id)}">
+            <div class="card-head">
+              <h2>${escapeHtml(x.date)}</h2>
+              <div class="toolbar">
+                <button class="button btnDelOne" type="button" data-del="${escapeHtml(id)}">삭제</button>
+              </div>
+            </div>
+            <ul>
+              <li><b>오늘 배운 개념</b>: ${nl2br(x.concept)}</li>
+              <li><b>예제/링크</b>: ${nl2br(x.link)}</li>
+              <li><b>헷갈린 점</b>: ${nl2br(x.confuse)}</li>
+              <li><b>내일 복습</b>: ${nl2br(x.tomorrow)}</li>
+            </ul>
+          </div>
+        `;
+      }).join("");
+
+      logsContainer.innerHTML = cards || `<p class="small muted">아직 기록이 없어. (위에서 추가하면 여기에 쌓여)</p>`;
+      logCountText.textContent = `기록 ${logs.length}개`;
+    };
+
+    const clearInputs = () => {
+      logConcept.value = "";
+      logLink.value = "";
+      logConfuse.value = "";
+      logTomorrow.value = "";
+    };
+
+    // init date
+    logDate.value = todayISO();
+
+    renderLogs();
+
+    btnAddLog.addEventListener("click", () => {
+      const date = (logDate.value || todayISO()).trim();
+      const concept = logConcept.value.trim();
+      const link = logLink.value.trim();
+      const confuse = logConfuse.value.trim();
+      const tomorrow = logTomorrow.value.trim();
+
+      // 최소 입력 제한은 빡세게 안 걸고, 날짜만 필수
+      if (!date) return;
+
+      logs.push({
+        date,
+        concept,
+        link,
+        confuse,
+        tomorrow,
+        createdAt: String(Date.now())
+      });
+
+      saveLogs(logs);
+      renderLogs();
+      clearInputs();
+      logDate.value = todayISO();
+
+      // 새 카드로 이동
+      const firstCard = logsContainer.querySelector(".studylog-card");
+      firstCard?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    btnClearInputs.addEventListener("click", clearInputs);
+
+    // 카드 1개 삭제
+    document.addEventListener("click", (e) => {
+      const del = e.target.closest(".btnDelOne[data-del]");
+      if (!del) return;
+
+      const id = del.dataset.del;
+      // id를 "date + index"로 만들었기 때문에, 렌더 기준과 다를 수 있음.
+      // 그래서 삭제는 '버튼이 속한 카드의 순서'를 기준으로 처리.
+      const card = del.closest(".studylog-card");
+      if (!card) return;
+
+      // 카드에 표시된 날짜 텍스트로 매칭해서 가장 최근 하나 삭제(간단하게)
+      const dateText = card.querySelector("h2")?.textContent?.trim();
+      if (!dateText) return;
+
+      // 같은 날짜 여러개면 가장 최근 createdAt 하나 삭제
+      const same = logs.filter(x => x.date === dateText).sort((a,b)=> Number(b.createdAt)-Number(a.createdAt));
+      const victim = same[0];
+      logs = logs.filter(x => !(x.date === victim.date && x.createdAt === victim.createdAt));
+
+      saveLogs(logs);
+      renderLogs();
+    });
+
+    btnDeleteAllLogs.addEventListener("click", () => {
+      logs = [];
+      saveLogs(logs);
+      renderLogs();
+    });
+
+    btnCopyHtml.addEventListener("click", async () => {
+      // logsContainer 내부 카드들만 HTML로 복사
+      const html = logsContainer.innerHTML.trim();
+      const payload =
+`<!-- Study Log Cards (paste into study.html) -->
+${html}
+<!-- /Study Log Cards -->`;
+
+      try {
+        await navigator.clipboard.writeText(payload);
+        btnCopyHtml.textContent = "복사됨!";
+        setTimeout(() => btnCopyHtml.textContent = "내보내기(HTML 복사)", 900);
+      } catch {
+        // 클립보드 권한 실패시 fallback
+        const ta = document.createElement("textarea");
+        ta.value = payload;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        btnCopyHtml.textContent = "복사됨!";
+        setTimeout(() => btnCopyHtml.textContent = "내보내기(HTML 복사)", 900);
+      }
+    });
+
+    /** ---------------------------
+     *  B) Python Review Checklist (기존 기능 유지: 저장/targets/점프)
+     *  --------------------------*/
     const KEY = "py_review_day1_day3_v3";
 
     const btnPrint = document.getElementById("btnPrint");
@@ -361,7 +496,7 @@
     const save = (state) => localStorage.setItem(KEY, JSON.stringify(state));
 
     const state = load();
-    const rows = document.querySelectorAll(".row");
+    const rows = document.querySelectorAll("#pyReviewCard .row");
 
     const getId = (row) => {
       const box = row.closest(".checklist");
@@ -393,20 +528,10 @@
       progressText.textContent = `총 ${total}개 · ✔ ${ok} / △ ${mid} / ❌ ${no} (미체크 ${empty})`;
     };
 
-    const escapeHtml = (s) => {
-      return s
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    };
-
     const labelDay = (k) => (k === "day1" ? "DAY1" : k === "day2" ? "DAY2" : k === "day3" ? "DAY3" : k);
 
-    // ✅ 해당 row로 이동: DAY 열기 + 스크롤 + 하이라이트
     const goToRow = (rowId) => {
-      const row = document.querySelector(`.row[data-id="${CSS.escape(rowId)}"]`);
+      const row = document.querySelector(`#pyReviewCard .row[data-id="${CSS.escape(rowId)}"]`);
       if (!row) return;
 
       const dayDetails = row.closest("details.day");
@@ -415,14 +540,12 @@
       row.scrollIntoView({ behavior: "smooth", block: "center" });
 
       row.classList.remove("flash");
-      // reflow
       void row.offsetWidth;
       row.classList.add("flash");
       setTimeout(() => row.classList.remove("flash"), 900);
     };
 
     const buildTargets = () => {
-      // bucket: {day1:[{label,v,id}], ...}
       const bucket = { day1: [], day2: [], day3: [] };
 
       rows.forEach(row => {
@@ -473,10 +596,10 @@
       targetsCount.textContent = `· ${total}개`;
     };
 
-    // ✅ init: 모든 details 기본 닫힘 강제
-    document.querySelectorAll("details.day").forEach(d => d.open = false);
+    // init: details 기본 닫힘
+    document.querySelectorAll("#pyReviewCard details.day").forEach(d => d.open = false);
 
-    // ✅ 각 row에 고유 id 붙이기 (targets에서 점프 가능하게)
+    // init rows id + paint
     rows.forEach(row => {
       const id = getId(row);
       row.dataset.id = id;
@@ -484,16 +607,16 @@
       const box = row.closest(".checklist");
       row.dataset.daykey = box?.dataset.day || "etc";
 
-      // 초기 paint
       paintRow(row, state[id]);
     });
 
     updateProgress();
     buildTargets();
 
-    // ✅ 체크 버튼 클릭
+    // 클릭 핸들러
     document.addEventListener("click", (e) => {
-      const btn = e.target.closest("button[data-v]");
+      // 체크 버튼
+      const btn = e.target.closest("#pyReviewCard button[data-v]");
       if (btn) {
         const row = btn.closest(".row");
         if (!row) return;
@@ -515,11 +638,10 @@
         return;
       }
 
-      // ✅ targets 항목 클릭 → 이동
-      const tbtn = e.target.closest(".titem[data-goto]");
+      // targets 점프
+      const tbtn = e.target.closest("#pyReviewCard .titem[data-goto]");
       if (tbtn) {
-        const rowId = tbtn.dataset.goto;
-        goToRow(rowId);
+        goToRow(tbtn.dataset.goto);
       }
     });
 
@@ -542,4 +664,3 @@
   </script>
 </body>
 </html>
-
